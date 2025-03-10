@@ -6,6 +6,7 @@ import com.facts_svc.web.dto.FactResponse;
 import com.facts_svc.web.dto.NewFactRequest;
 import com.facts_svc.web.mapper.DtoMapper;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,7 +57,7 @@ public class FactController {
         return ResponseEntity.ok(factResponse);
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<FactResponse> getFactById(@PathVariable UUID id) {
         Fact factById = factService.getFactById(id);
         if (factById == null) {
@@ -71,10 +72,15 @@ public class FactController {
     public ResponseEntity<FactResponse> createFact(@RequestBody @Valid NewFactRequest newFactRequest) {
 
         Fact fact = this.factService.createFact(toFact(newFactRequest));
+
         if (fact == null) {
-            return ResponseEntity.badRequest().body(null);
-        } else {
-            return ResponseEntity.created(URI.create(API_V1_BASE_PATH + "/facts/" + fact.getId())).build();
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
+                    .build();
         }
+
+        FactResponse factResponse = toFactResponse(fact);
+
+        return ResponseEntity.created(URI.create(API_V1_BASE_PATH + "/facts/" + fact.getId()))
+                .body(factResponse);
     }
 }

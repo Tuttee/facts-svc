@@ -19,7 +19,11 @@ public class FactService {
     }
 
     public Fact createFact(Fact fact) {
-        return this.factRepository.save(fact);
+        try {
+            return factRepository.save(fact);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public Fact getFactById(UUID id) {
