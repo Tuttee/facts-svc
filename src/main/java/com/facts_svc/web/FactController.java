@@ -4,7 +4,7 @@ import com.facts_svc.model.Fact;
 import com.facts_svc.service.FactService;
 import com.facts_svc.web.dto.FactResponse;
 import com.facts_svc.web.dto.NewFactRequest;
-import com.facts_svc.web.mapper.DtoMapper;
+import com.facts_svc.mapper.FactMapper;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +16,8 @@ import java.util.Random;
 import java.util.UUID;
 
 import static com.facts_svc.web.Paths.API_V1_BASE_PATH;
-import static com.facts_svc.web.mapper.DtoMapper.toFact;
-import static com.facts_svc.web.mapper.DtoMapper.toFactResponse;
+import static com.facts_svc.mapper.FactMapper.toFact;
+import static com.facts_svc.mapper.FactMapper.toFactResponse;
 
 @RestController
 @RequestMapping(API_V1_BASE_PATH + "/facts")
@@ -33,7 +33,7 @@ public class FactController {
         List<FactResponse> factResponses = factService
                 .getAllFacts()
                 .stream()
-                .map(DtoMapper::toFactResponse)
+                .map(FactMapper::toFactResponse)
                 .toList();
 
         if (factResponses.isEmpty()) {

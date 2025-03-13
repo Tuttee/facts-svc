@@ -1,4 +1,4 @@
-package com.facts_svc.web.mapper;
+package com.facts_svc.mapper;
 
 import com.facts_svc.model.Fact;
 import com.facts_svc.web.dto.FactResponse;
@@ -8,7 +8,7 @@ import lombok.experimental.UtilityClass;
 import java.time.LocalDateTime;
 
 @UtilityClass
-public class DtoMapper {
+public class FactMapper {
     public static FactResponse toFactResponse(Fact fact) {
         return FactResponse
                 .builder()
