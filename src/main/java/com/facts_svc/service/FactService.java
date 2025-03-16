@@ -4,6 +4,7 @@ import com.facts_svc.model.Fact;
 import com.facts_svc.repository.FactRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,14 +20,10 @@ public class FactService {
     }
 
     public Fact createFact(Fact fact) {
-        try {
             return factRepository.save(fact);
-        } catch (Exception e) {
-            return null;
-        }
     }
 
     public Fact getFactById(UUID id) {
-        return this.factRepository.findById(id).orElse(null);
+        return this.factRepository.findById(id).orElseThrow();
     }
 }

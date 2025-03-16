@@ -1,12 +1,11 @@
 package com.facts_svc.web;
 
+import com.facts_svc.mapper.FactMapper;
 import com.facts_svc.model.Fact;
 import com.facts_svc.service.FactService;
 import com.facts_svc.web.dto.FactResponse;
 import com.facts_svc.web.dto.NewFactRequest;
-import com.facts_svc.mapper.FactMapper;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,9 +14,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-import static com.facts_svc.web.Paths.API_V1_BASE_PATH;
 import static com.facts_svc.mapper.FactMapper.toFact;
 import static com.facts_svc.mapper.FactMapper.toFactResponse;
+import static com.facts_svc.web.Paths.API_V1_BASE_PATH;
 
 @RestController
 @RequestMapping(API_V1_BASE_PATH + "/facts")
@@ -72,11 +71,6 @@ public class FactController {
     public ResponseEntity<FactResponse> createFact(@RequestBody @Valid NewFactRequest newFactRequest) {
 
         Fact fact = this.factService.createFact(toFact(newFactRequest));
-
-        if (fact == null) {
-            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
-                    .build();
-        }
 
         FactResponse factResponse = toFactResponse(fact);
 
