@@ -4,9 +4,7 @@ import com.facts_svc.model.Fact;
 import com.facts_svc.repository.FactRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.resource.NoResourceFoundException;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 

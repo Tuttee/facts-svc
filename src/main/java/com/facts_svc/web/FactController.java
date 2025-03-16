@@ -59,12 +59,8 @@ public class FactController {
     @GetMapping("/{id}")
     public ResponseEntity<FactResponse> getFactById(@PathVariable UUID id) {
         Fact factById = factService.getFactById(id);
-        if (factById == null) {
-            return ResponseEntity.notFound().build();
-        } else {
-            return ResponseEntity.ok(toFactResponse(factById));
-        }
 
+            return ResponseEntity.ok(toFactResponse(factById));
     }
 
     @PostMapping
