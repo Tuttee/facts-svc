@@ -2,10 +2,7 @@ package com.facts_svc.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -16,6 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Fact {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

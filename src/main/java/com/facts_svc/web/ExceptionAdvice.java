@@ -1,6 +1,7 @@
 package com.facts_svc.web;
 
 import com.facts_svc.web.dto.ErrorResponse;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,7 +13,8 @@ import java.util.NoSuchElementException;
 @ControllerAdvice
 public class ExceptionAdvice {
 
-    @ExceptionHandler(SQLException.class)
+    @ExceptionHandler({SQLException.class,
+            DataIntegrityViolationException.class})
     public ResponseEntity<ErrorResponse> handleSQLException(SQLException ex) {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.UNPROCESSABLE_ENTITY.value(),
                 "Database error: " + ex.getMessage());
