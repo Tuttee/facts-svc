@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table
+@Table(name = "facts")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -19,7 +19,7 @@ public class Fact {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, columnDefinition = "TEXT")
     @Size(min = 5)
     private String content;
 
