@@ -15,7 +15,7 @@ public class ExceptionAdvice {
 
     @ExceptionHandler({SQLException.class,
             DataIntegrityViolationException.class})
-    public ResponseEntity<ErrorResponse> handleSQLException(SQLException ex) {
+    public ResponseEntity<ErrorResponse> handleSQLException(Exception ex) {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.UNPROCESSABLE_ENTITY.value(),
                 "Database error: " + ex.getMessage());
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(errorResponse);

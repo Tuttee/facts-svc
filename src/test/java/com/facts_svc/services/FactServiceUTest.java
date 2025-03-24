@@ -3,6 +3,8 @@ package com.facts_svc.services;
 import com.facts_svc.model.Fact;
 import com.facts_svc.repository.FactRepository;
 import com.facts_svc.service.FactService;
+import com.facts_svc.web.dto.FactResponse;
+import com.facts_svc.web.dto.NewFactRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,6 +17,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.facts_svc.TestBuilder.getNewFactRequest;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -41,9 +44,10 @@ public class FactServiceUTest {
     @Test
     void givenCorrectData_whenCreateFact_thenSuccess() {
         Fact fact = new Fact();
+        NewFactRequest factRequest = getNewFactRequest();
         when(factRepository.save(any(Fact.class))).thenReturn(fact);
 
-        Fact fact1 = factService.createFact(fact);
+        Fact fact1 = factService.createFact(factRequest);
 
         verify(factRepository, times(1)).save(any(Fact.class));
         assertEquals(fact, fact1);
@@ -62,10 +66,10 @@ public class FactServiceUTest {
 
         when(factRepository.findById(fact.getId())).thenReturn(Optional.of(fact));
 
-        Fact factById = factService.getFactById(fact.getId());
+        FactResponse factById = factService.getFactById(fact.getId());
 
         verify(factRepository, times(1)).findById(fact.getId());
-        assertEquals(fact, factById);
+        assertEquals(fact.getContent(), factById.getContent());
     }
 
 }

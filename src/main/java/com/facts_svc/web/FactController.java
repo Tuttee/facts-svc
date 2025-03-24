@@ -1,6 +1,5 @@
 package com.facts_svc.web;
 
-import com.facts_svc.mapper.FactMapper;
 import com.facts_svc.model.Fact;
 import com.facts_svc.service.FactService;
 import com.facts_svc.web.dto.FactResponse;
@@ -14,7 +13,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-import static com.facts_svc.mapper.FactMapper.toFact;
 import static com.facts_svc.mapper.FactMapper.toFactResponse;
 import static com.facts_svc.web.Paths.API_V1_BASE_PATH;
 
@@ -30,10 +28,7 @@ public class FactController {
     @GetMapping
     public ResponseEntity<List<FactResponse>> getAllFacts() {
         List<FactResponse> factResponses = factService
-                .getAllFacts()
-                .stream()
-                .map(FactMapper::toFactResponse)
-                .toList();
+                .getAllFacts();
 
         if (factResponses.isEmpty()) {
             return ResponseEntity.noContent().build();
@@ -45,28 +40,27 @@ public class FactController {
 
     @GetMapping("/random")
     public ResponseEntity<FactResponse> getRandomFact() {
-        List<Fact> allFacts = this.factService.getAllFacts();
+        List<FactResponse> allFacts = this.factService.getAllFacts();
 
         if (allFacts.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
 
         Random random = new Random();
-        FactResponse factResponse = toFactResponse(allFacts.get(random.nextInt(allFacts.size())));
+        FactResponse factResponse = allFacts.get(random.nextInt(allFacts.size()));
         return ResponseEntity.ok(factResponse);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<FactResponse> getFactById(@PathVariable UUID id) {
-        Fact factById = factService.getFactById(id);
+        FactResponse factById = factService.getFactById(id);
 
-            return ResponseEntity.ok(toFactResponse(factById));
+        return ResponseEntity.ok(factById);
     }
 
     @PostMapping
     public ResponseEntity<FactResponse> createFact(@RequestBody @Valid NewFactRequest newFactRequest) {
-
-        Fact fact = this.factService.createFact(toFact(newFactRequest));
+        Fact fact = this.factService.createFact(newFactRequest);
 
         FactResponse factResponse = toFactResponse(fact);
 
