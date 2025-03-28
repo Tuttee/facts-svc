@@ -1,6 +1,7 @@
 package com.facts_svc.web;
 
 import com.facts_svc.web.dto.ErrorResponse;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 import java.util.NoSuchElementException;
 
 @ControllerAdvice
+@Hidden
 public class ExceptionAdvice {
 
     @ExceptionHandler({SQLException.class,

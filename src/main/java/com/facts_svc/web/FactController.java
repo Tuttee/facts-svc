@@ -4,6 +4,7 @@ import com.facts_svc.model.Fact;
 import com.facts_svc.service.FactService;
 import com.facts_svc.web.dto.FactResponse;
 import com.facts_svc.web.dto.NewFactRequest;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import static com.facts_svc.web.Paths.API_V1_BASE_PATH;
 
 @RestController
 @RequestMapping(API_V1_BASE_PATH + "/facts")
+@Tag(name = "Facts Management", description = "Operation related to Facts")
 public class FactController {
     private final FactService factService;
 

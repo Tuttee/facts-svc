@@ -1,0 +1,45 @@
+services:
+  mysql-db-facts:
+    image: mysql:8.0
+    container_name: mysql-facts
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: facts_svc
+      MYSQL_USER: cacti
+      MYSQL_PASSWORD: password123
+    ports:
+      - "3307:3306"
+    networks:
+      - cacti
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      retries: 5
+      start_period: 20s
+
+  app:
+    build: .
+    container_name: facts-svc
+    restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      MYSQL_HOST: mysql-db-facts
+      MYSQL_DB: facts_svc
+      MYSQL_USER: cacti
+      MYSQL_PASSWORD: password123
+    ports:
+      - "8081:8081"
+    depends_on:
+      mysql-db-facts:
+        condition: service_healthy
+    networks:
+      - cacti
+
+networks:
+  cacti:
+
+volumes:
+  mysql_data:
