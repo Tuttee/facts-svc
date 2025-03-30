@@ -4,7 +4,7 @@ FROM openjdk:21-jdk
 WORKDIR /app
 
 # Copy the JAR file into the container
-COPY target/facts-svc-0.0.1-SNAPSHOT.jar app.jar
+COPY target/facts-svc-0.0.2.jar app.jar
 
 # Expose the port your application runs on
 EXPOSE 8081

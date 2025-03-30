@@ -30,6 +30,7 @@ services:
       MYSQL_DB: facts_svc
       MYSQL_USER: cacti
       MYSQL_PASSWORD: password123
+      KAFKA_HOST: 172.17.0.1:9092
     ports:
       - "8081:8081"
     depends_on:
